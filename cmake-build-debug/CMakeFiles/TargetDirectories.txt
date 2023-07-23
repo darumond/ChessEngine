@@ -1,0 +1,4 @@
+/home/luc/Prog/CPP/projet/chess/chess-cpp/cmake-build-debug/CMakeFiles/chessengine.dir
+/home/luc/Prog/CPP/projet/chess/chess-cpp/cmake-build-debug/CMakeFiles/build_all.dir
+/home/luc/Prog/CPP/projet/chess/chess-cpp/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/luc/Prog/CPP/projet/chess/chess-cpp/cmake-build-debug/CMakeFiles/rebuild_cache.dir
