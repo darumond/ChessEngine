@@ -9,16 +9,16 @@ int main(int argc, char **argv) {
                   << "\n";
     if (argc == 3){
         board chessBoard(argv[2]);
-        chessBoard.print_chess_board();
+        // chessBoard.print_chess_board();
 
         std::cout << chessBoard.generateMove(chessBoard.get_Depth(),false) << std::endl;
-        chessBoard.print_count_move();
+        // chessBoard.print_count_move();
     }
     if(argc == 4)
     {
         board chessBoard(argv[2]);
-        auto res = chessBoard.generateMove(chessBoard.get_Depth(),true);
-        std::cout << "TOTAL POSSIBLE MOVE ON DEPTH " << chessBoard.get_Depth() << ": " << res << std::endl;
+        // auto res = chessBoard.generateMove(chessBoard.get_Depth(),true);
+        // std::cout << "TOTAL POSSIBLE MOVE ON DEPTH " << chessBoard.get_Depth() << ": " << res << std::endl;
 
     }
 
