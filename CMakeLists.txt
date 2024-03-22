@@ -11,7 +11,8 @@ add_executable(chessengine
         src/Pieces/knight.cc
         src/Pieces/king.cc
         src/Pieces/queen.cc
-        src/Pieces/bishop.cc)
+        src/Pieces/bishop.cc
+        src/AI/uci.cc)
 
 add_library(compile_options INTERFACE)
 
@@ -49,7 +50,7 @@ set_target_properties(chessengine PROPERTIES
 #        TEST_LIST noArgsTests
 #        )
 
-include_directories(chessengine PUBLIC src/Pieces src/Board)
+include_directories(chessengine PUBLIC src/Pieces src/Board src/AI)
 
 target_link_libraries(chessengine PRIVATE compile_options)
 

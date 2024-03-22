@@ -139,6 +139,5 @@ std::vector<Move> Pawn::move( board &board) {
                 moves.emplace_back(this->x, this->y, this->x + 1, this->y + 1);
         }
     }
-
     return moves;
 }

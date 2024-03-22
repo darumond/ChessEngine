@@ -13,12 +13,14 @@
 
 class Piece;
 
-enum Color {
+enum Color
+{
     white,
     black
 };
 
-enum Type {
+enum Type
+{
     pawn,
     bishop,
     knight,
@@ -27,16 +29,16 @@ enum Type {
     queen
 };
 
-
-enum Promotion {
+enum Promotion
+{
     BISHOP,
     KNIGHT,
     ROOK,
     QUEEN
 };
 
-
-class Move {
+class Move
+{
 
 private:
     int curr_x;
@@ -61,7 +63,6 @@ public:
 
     void setPromotion(Promotion promotion);
 
-
     Color getColor() const;
 
     void setColor(Color color);
@@ -85,8 +86,8 @@ public:
     void setIsCastle(bool isCastle);
 };
 
-
-class board {
+class board
+{
 public:
     using boardType = std::array<std::array<std::shared_ptr<Piece>, BOARD_SIZE>, BOARD_SIZE>;
 
@@ -114,15 +115,13 @@ public:
 
     const boardType get_Board() const;
 
-    const std::vector<Move> &getMoves() const;
+    const std::shared_ptr<Piece> getWhiteKing() const;
 
-    const std::shared_ptr<Piece>getWhiteKing() const;
+    void setWhiteKing(const std::shared_ptr<Piece> whiteKing);
 
-    void setWhiteKing(const std::shared_ptr<Piece>whiteKing);
+    const std::shared_ptr<Piece> getBlackKing() const;
 
-    const std::shared_ptr<Piece>getBlackKing() const;
-
-    void setBlackKing(const std::shared_ptr<Piece>blackKing);
+    void setBlackKing(const std::shared_ptr<Piece> blackKing);
 
     void check_legal_moves(std::vector<Move> &moves);
 
@@ -144,7 +143,7 @@ public:
 
     std::vector<Move> clean_moves();
 
-    size_t generateMove(int depth,bool print_move);
+    size_t generateMove(int depth, bool print_move);
 
     std::shared_ptr<Piece> createPiece(char c, int x, int y);
 
@@ -154,6 +153,11 @@ public:
 
     void undo_move(std::shared_ptr<Piece> p, Move move, std::shared_ptr<Piece> before);
 
+    std::string convertToAlgebraicNotation(int x, int y);
+    std::pair<int, int> convertSinglePositionFromAlgebraicNotation(const std::string &pos);
+    std::pair<std::pair<int, int>, std::pair<int, int>> convertFromAlgebraicNotation(const std::string &move);
+    Color getPlayerToMove();
+    void setPlayerToMove(Color player);
 
 private:
     boardType chessBoard_;
@@ -164,7 +168,4 @@ private:
     std::vector<Move> moves_;
     std::shared_ptr<Piece> white_king;
     std::shared_ptr<Piece> black_king;
-
-
-
 };
