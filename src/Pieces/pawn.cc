@@ -1,6 +1,7 @@
 #include "pawn.hh"
 
-bool Pawn::moveAllowedPawn(std::shared_ptr<Piece> piece, bool diag) {
+bool Pawn::moveAllowedPawn(std::shared_ptr<Piece> piece, bool diag)
+{
 
     if (piece == nullptr && diag)
         return false;
@@ -11,33 +12,43 @@ bool Pawn::moveAllowedPawn(std::shared_ptr<Piece> piece, bool diag) {
     if (piece != nullptr && diag && piece->get_type() != Type::king && piece->get_color() != this->color)
         return true;
     return false;
-
 }
 
-std::vector<Move> Pawn::move( board &board) {
-    Promotion promotion[4] = {BISHOP,KNIGHT,ROOK,QUEEN};
+std::vector<Move> Pawn::move(board &board)
+{
+    Promotion promotion[4] = {BISHOP, KNIGHT, ROOK, QUEEN};
     std::vector<Move> moves;
     bool skip = false;
-    if (board.get_EnPassant().first != -1) {
-        if (this->color == black) {
-            if (this->x + 1 == board.get_EnPassant().first && this->y + 1 == board.get_EnPassant().second) {
+    if (board.get_EnPassant().first != -1)
+    {
+        if (this->color == black)
+        {
+            if (this->x + 1 == board.get_EnPassant().first && this->y + 1 == board.get_EnPassant().second)
+            {
                 auto move = Move(this->x, this->y, this->x + 1, this->y + 1);
                 move.setIsEnPassant(true);
                 move.setColor(Color::black);
                 moves.push_back(move);
-            } else if (this->x + 1 == board.get_EnPassant().first && this->y - 1 == board.get_EnPassant().second) {
+            }
+            else if (this->x + 1 == board.get_EnPassant().first && this->y - 1 == board.get_EnPassant().second)
+            {
                 auto move = Move(this->x, this->y, this->x + 1, this->y - 1);
                 move.setIsEnPassant(true);
                 move.setColor(Color::black);
                 moves.push_back(move);
             }
-        } else {
-            if (this->x - 1 == board.get_EnPassant().first && this->y - 1 == board.get_EnPassant().second) {
+        }
+        else
+        {
+            if (this->x - 1 == board.get_EnPassant().first && this->y - 1 == board.get_EnPassant().second)
+            {
                 auto move = Move(this->x, this->y, this->x - 1, this->y - 1);
                 move.setIsEnPassant(true);
                 move.setColor(Color::white);
                 moves.push_back(move);
-            } else if (this->x - 1 == board.get_EnPassant().first && this->y + 1 == board.get_EnPassant().second) {
+            }
+            else if (this->x - 1 == board.get_EnPassant().first && this->y + 1 == board.get_EnPassant().second)
+            {
                 auto move = Move(this->x, this->y, this->x - 1, this->y + 1);
                 move.setIsEnPassant(true);
                 move.setColor(Color::white);
@@ -46,8 +57,10 @@ std::vector<Move> Pawn::move( board &board) {
         }
     }
 
-    if (this->color == white) {
-        if (moveAllowedPawn(board.get_Board()[this->x - 1][this->y], false)) {
+    if (this->color == white)
+    {
+        if (moveAllowedPawn(board.get_Board()[this->x - 1][this->y], false))
+        {
             if (this->x - 1 == 0)
                 for (int i = 0; i < 4; ++i)
                 {
@@ -58,7 +71,8 @@ std::vector<Move> Pawn::move( board &board) {
                 }
             else
                 moves.emplace_back(this->x, this->y, this->x - 1, this->y);
-        } else
+        }
+        else
             skip = true;
         if (!skip && this->x == 6 && moveAllowedPawn(board.get_Board()[this->x - 2][this->y], false))
         {
@@ -67,7 +81,8 @@ std::vector<Move> Pawn::move( board &board) {
             moves.emplace_back(move);
         }
         if (check_border(this->x - 1, this->y + 1) &&
-            moveAllowedPawn(board.get_Board()[this->x - 1][this->y + 1], true)) {
+            moveAllowedPawn(board.get_Board()[this->x - 1][this->y + 1], true))
+        {
             if (this->x - 1 == 0)
                 for (int i = 0; i < 4; ++i)
                 {
@@ -80,7 +95,8 @@ std::vector<Move> Pawn::move( board &board) {
                 moves.emplace_back(this->x, this->y, this->x - 1, this->y + 1);
         }
         if (check_border(this->x - 1, this->y - 1) &&
-            moveAllowedPawn(board.get_Board()[this->x - 1][this->y - 1], true)) {
+            moveAllowedPawn(board.get_Board()[this->x - 1][this->y - 1], true))
+        {
             if (this->x - 1 == 0)
                 for (int i = 0; i < 4; ++i)
                 {
@@ -92,8 +108,11 @@ std::vector<Move> Pawn::move( board &board) {
             else
                 moves.emplace_back(this->x, this->y, this->x - 1, this->y - 1);
         }
-    } else {
-        if (moveAllowedPawn(board.get_Board()[this->x + 1][this->y], false)) {
+    }
+    else
+    {
+        if (moveAllowedPawn(board.get_Board()[this->x + 1][this->y], false))
+        {
             if (this->x + 1 == 7)
                 for (int i = 0; i < 4; ++i)
                 {
@@ -104,7 +123,8 @@ std::vector<Move> Pawn::move( board &board) {
                 }
             else
                 moves.emplace_back(this->x, this->y, this->x + 1, this->y);
-        } else
+        }
+        else
             skip = true;
         if (!skip && this->x == 1 && moveAllowedPawn(board.get_Board()[this->x + 2][this->y], false))
         {
@@ -113,7 +133,8 @@ std::vector<Move> Pawn::move( board &board) {
             moves.emplace_back(move);
         }
         if (check_border(this->x + 1, this->y - 1) &&
-            moveAllowedPawn(board.get_Board()[this->x + 1][this->y - 1], true)) {
+            moveAllowedPawn(board.get_Board()[this->x + 1][this->y - 1], true))
+        {
             if (this->x + 1 == 7)
                 for (int i = 0; i < 4; ++i)
                 {
@@ -126,7 +147,8 @@ std::vector<Move> Pawn::move( board &board) {
                 moves.emplace_back(this->x, this->y, this->x + 1, this->y - 1);
         }
         if (check_border(this->x + 1, this->y + 1) &&
-            moveAllowedPawn(board.get_Board()[this->x + 1][this->y + 1], true)) {
+            moveAllowedPawn(board.get_Board()[this->x + 1][this->y + 1], true))
+        {
             if (this->x + 1 == 7)
                 for (int i = 0; i < 4; ++i)
                 {
@@ -140,4 +162,9 @@ std::vector<Move> Pawn::move( board &board) {
         }
     }
     return moves;
+}
+
+Pawn *Pawn::clone() const
+{
+    return new Pawn(*this);
 }

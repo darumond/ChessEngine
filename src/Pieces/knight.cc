@@ -31,3 +31,8 @@ std::vector<Move> Knight::move( board &board) {
     return move;
 
 }
+
+Knight *Knight::clone() const
+{
+    return new Knight(*this);
+}

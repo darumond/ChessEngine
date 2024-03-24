@@ -8,6 +8,54 @@
 #include "../Pieces/king.hh"
 #include "../Pieces/knight.hh"
 
+board &board::operator=(const board &other)
+{
+    if (this != &other)
+    { // Self-assignment check
+
+        player_to_move_ = other.player_to_move_;
+        castling_ = other.castling_;
+        en_passant_ = other.en_passant_;
+        depth_ = other.depth_;
+        white_king = other.white_king;
+        black_king = other.black_king;
+
+        for (int i = 0; i < BOARD_SIZE; ++i)
+        {
+            for (int j = 0; j < BOARD_SIZE; ++j)
+            {
+                if (other.chessBoard_[i][j])
+                {
+                    chessBoard_[i][j] = std::shared_ptr<Piece>(other.chessBoard_[i][j]->clone());
+                }
+                else
+                {
+                    chessBoard_[i][j] = nullptr;
+                }
+            }
+        }
+    }
+    return *this;
+}
+
+board::board(const board &other) : player_to_move_(other.player_to_move_), castling_(other.castling_), en_passant_(other.en_passant_), depth_(other.depth_), white_king(other.white_king), black_king(other.black_king)
+{
+    for (int i = 0; i < BOARD_SIZE; ++i)
+    {
+        for (int j = 0; j < BOARD_SIZE; ++j)
+        {
+            if (other.chessBoard_[i][j])
+            {
+                chessBoard_[i][j] = std::shared_ptr<Piece>(other.chessBoard_[i][j]->clone());
+            }
+            else
+            {
+                chessBoard_[i][j] = nullptr;
+            }
+        }
+    }
+}
+
 board::board(const std::string &perft)
 {
     initialize(perft);
@@ -108,14 +156,18 @@ size_t board::generateMove(int depth, bool print_move)
 
 void board::moveTo(std::shared_ptr<Piece> p, int destX, int destY, std::shared_ptr<Piece> before = nullptr)
 {
-    int old_x = p->get_x();
-    int old_y = p->get_y();
-    p->setX(destX);
-    p->setY(destY);
-    chessBoard_[old_x][old_y] = nullptr;
-    if (before != nullptr)
-        chessBoard_[before->get_x()][before->get_y()] = before;
-    chessBoard_[destX][destY] = p;
+    if (p != nullptr)
+    {
+
+        int old_x = p->get_x();
+        int old_y = p->get_y();
+        p->setX(destX);
+        p->setY(destY);
+        chessBoard_[old_x][old_y] = nullptr;
+        if (before != nullptr)
+            chessBoard_[before->get_x()][before->get_y()] = before;
+        chessBoard_[destX][destY] = p;
+    }
 }
 
 void board::undo_move(std::shared_ptr<Piece> p, Move move, std::shared_ptr<Piece> before = nullptr)
@@ -782,7 +834,7 @@ void board::check_legal_moves(std::vector<Move> &moves)
     {
         auto move = moves[i];
         auto p = chessBoard_[move.getCurrX()][move.getCurrY()];
-
+        std::cout << *p << '\n';
         std::shared_ptr<Piece> saveEnPassant = nullptr;
         if (move.isEnPassant1())
         {
@@ -797,10 +849,25 @@ void board::check_legal_moves(std::vector<Move> &moves)
                 chessBoard_[move.getDestX() - 1][move.getDestY()] = nullptr;
             }
         }
+
+        // std::cout << "hello" << '\n';
+        std::cout << move.getDestX() << '\n';
+        std::cout << move.getDestY() << '\n';
+        // bool islegal = true;
+        // if (move.getDestX() < 0 || move.getDestY() < 0 || move.getCurrX() > 7 || move.getCurrY() > 7 || move.getDestY() > 7 || move.getDestX() > 7 || move.getCurrX() < 0 || move.getCurrY() < 0)
+        // {
+
+        //     moves.erase(moves.begin() + i);
+        //     i--;
+        // }
+        // else
+        // {
+
         auto undo = chessBoard_[move.getDestX()][move.getDestY()];
         move_piece(p, move);
         bool islegal = check_check();
         undo_move(p, move, undo);
+        // }
         if (move.isEnPassant1())
         {
             if (move.getColor() == Color::white)

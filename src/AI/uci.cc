@@ -7,7 +7,7 @@
 void uciLoop()
 {
     std::string line;
-    board chessBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"); // Initialize your chess board here
+    board chessBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 
     while (getline(std::cin, line))
     {
@@ -32,9 +32,7 @@ void uciLoop()
         else if (token == "position")
         {
             std::string positionType;
-            iss >> positionType; // Reads either "startpos" or "fen"
-
-            // Handle board initialization if needed...
+            iss >> positionType;
 
             std::vector<std::string> moves;
             while (iss >> token) // Continue reading all moves
@@ -119,15 +117,13 @@ void uciLoop()
 
         else if (token == "go")
         {
-            // Process the go command, calculate and make a move
-            // This is where you can implement move time, wtime, btime, etc.
-            // For now, let's assume we just pick a random move
-            auto moves = chessBoard.clean_moves();
+            // auto moves = chessBoard.clean_moves();
+            auto bestMove = getBestMove(chessBoard);
             // chessBoard.pretty_print_move(moves);
-            if (!moves.empty())
-            {
+            // if (!moves.empty())
+            // {
                 // Pick the first move for simplicity (or implement a better move selection)
-                auto bestMove = moves.front();
+                // auto bestMove = moves.front();
 
                 auto piece = chessBoard.get_Board()[bestMove.getCurrX()][bestMove.getCurrY()];
                 chessBoard.move_piece(piece, bestMove);
@@ -140,12 +136,11 @@ void uciLoop()
                 }
 
                 std::cout << "bestmove " << moveString << "\n";
-            }
+            // }
         }
         else if (token == "quit" || token == "stop")
         {
-            break; // Exit the loop
+            break;
         }
-        // Add more commands as necessary
     }
 }

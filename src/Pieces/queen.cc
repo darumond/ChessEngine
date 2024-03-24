@@ -77,3 +77,8 @@ std::vector<Move> Queen::move( board &board) {
 
     return moves;
 }
+
+Queen *Queen::clone() const
+{
+    return new Queen(*this);
+}

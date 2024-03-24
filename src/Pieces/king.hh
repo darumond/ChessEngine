@@ -28,6 +28,7 @@ public:
     void setCanCastle(bool canCastle);
 
     std::vector<Move> move( board &board) override;
+    King *clone() const override;
 
     std::vector<Move> moveCastle( board &board);
 

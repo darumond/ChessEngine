@@ -13,6 +13,7 @@ public:
     }
 
     std::vector<Move> move( board &board) override;
+    Queen *clone() const override;
 
     std::string to_string() const override {
         if (color == Color::white)

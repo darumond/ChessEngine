@@ -19,6 +19,8 @@ public:
 
     virtual std::vector<Move> move( board &board) = 0;
 
+    virtual Piece* clone() const = 0;
+    
     virtual std::string to_string() const = 0;
 
     friend std::ostream &operator<<(std::ostream &out, const Piece &p) {

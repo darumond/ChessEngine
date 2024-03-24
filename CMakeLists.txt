@@ -12,7 +12,8 @@ add_executable(chessengine
         src/Pieces/king.cc
         src/Pieces/queen.cc
         src/Pieces/bishop.cc
-        src/AI/uci.cc)
+        src/AI/uci.cc
+        src/AI/mcts.cc)
 
 add_library(compile_options INTERFACE)
 

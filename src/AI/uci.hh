@@ -1,5 +1,5 @@
 #pragma once
 
-#include "board.hh"
+#include "mcts.hh"
 
 void uciLoop();

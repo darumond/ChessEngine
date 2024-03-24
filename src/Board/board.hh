@@ -91,6 +91,10 @@ class board
 public:
     using boardType = std::array<std::array<std::shared_ptr<Piece>, BOARD_SIZE>, BOARD_SIZE>;
 
+    board(const board &other);
+
+    board &operator=(const board &other);
+
     board(const std::string &perft);
 
     void initialize(const std::string &perft);

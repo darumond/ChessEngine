@@ -40,3 +40,8 @@ std::vector<Move>Bishop::move( board &board) {
 
     return move;
 }
+
+Bishop *Bishop::clone() const
+{
+    return new Bishop(*this);
+}

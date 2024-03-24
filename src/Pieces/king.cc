@@ -127,6 +127,10 @@ std::vector<Move> King::move( board &board) {
     return move;
 }
 
+King *King::clone() const
+{
+    return new King(*this);
+}
 
 bool King::isCanCastleQueen() const {
     return canCastleQueen;

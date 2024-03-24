@@ -17,6 +17,7 @@ public:
     bool isCanCastle() const;
 
     std::vector<Move> move( board &board) override;
+    Rook *clone() const override;
 
     std::string to_string() const override {
         if (color == Color::white)

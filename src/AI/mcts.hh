@@ -1,5 +1,6 @@
 #pragma once
 
 #include "board.hh"
+#include <random>
 
-Move getBestMove(std::vector<Move> moves);
+Move getBestMove(board Chessboard);

@@ -49,3 +49,8 @@ std::vector<Move> Rook::move( board &board) {
 
     return moves;
 }
+
+Rook *Rook::clone() const
+{
+    return new Rook(*this);
+}
