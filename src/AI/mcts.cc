@@ -11,12 +11,12 @@ Move getBestMove(board Chessboard)
 
     for (size_t i = 0; i < moves.size(); i++)
     {
-        auto current_move = moves[i];
+        auto current_move = moves[0];
         auto piece = Chessboard.get_Board()[current_move.getCurrX()][current_move.getCurrY()];
-        Chessboard.move_piece(piece, current_move);
+        // Chessboard.move_piece(piece, current_move);
         int gain = 0;
-        // for (size_t i = 0; i < 50; i++)
-        // {
+        for (size_t i = 0; i < 10; i++)
+        {
 
             auto mov = Chessboard.clean_moves();
             while (!mov.empty())
@@ -40,9 +40,19 @@ Move getBestMove(board Chessboard)
                 else
                 {
                     Chessboard.setPlayerToMove(black);
+                    auto king = Chessboard.getBlackKing();
+                    // std::cout << king->get_x() << '\n';
+                    // std::cout << king->get_y() << '\n';
                 }
 
                 mov = Chessboard.clean_moves();
+
+                if (isDraw(Chessboard))
+                {
+                    break;
+                }
+
+                // std::cout << mov.size() << '\n';
             }
 
             if (mov.empty() && Chessboard.getPlayerToMove() == color)
@@ -53,13 +63,13 @@ Move getBestMove(board Chessboard)
             Chessboard = copy;
             Chessboard.setPlayerToMove(color);
             // Chessboard.print_chess_board();
-        // }
+        }
 
         if (gain > max)
         {
             max = gain;
-            res = moves[i];
-            std::cout << "gain: " << gain << '\n';
+            res = moves[0];
+            // std::cout << "gain: " << gain << '\n';
         }
     }
 

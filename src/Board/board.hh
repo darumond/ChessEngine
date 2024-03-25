@@ -173,3 +173,5 @@ private:
     std::shared_ptr<Piece> white_king;
     std::shared_ptr<Piece> black_king;
 };
+
+bool isDraw(board &Chessboard);

@@ -78,6 +78,7 @@ size_t board::generateMove(int depth, bool print_move)
     }
     else
     {
+
         auto moves = clean_moves();
         size_t res = 0;
         en_passant_ = std::make_pair(-1, -1);
@@ -163,10 +164,42 @@ void board::moveTo(std::shared_ptr<Piece> p, int destX, int destY, std::shared_p
         int old_y = p->get_y();
         p->setX(destX);
         p->setY(destY);
+
         chessBoard_[old_x][old_y] = nullptr;
         if (before != nullptr)
             chessBoard_[before->get_x()][before->get_y()] = before;
         chessBoard_[destX][destY] = p;
+
+        if (p->get_type() == Type::king && get_Player_To_Move() == black)
+        {
+            // std::cout << "WSHHH" << '\n';
+
+            // std::cout << p->get_x() << '\n';
+            // std::cout << p->get_y() << '\n';
+
+            black_king->setX(destX);
+            black_king->setY(destY);
+
+            // std::cout << black_king->get_x() << '\n';
+            // std::cout << black_king->get_y() << '\n';
+
+            // print_chess_board();
+        }
+        if (p->get_type() == Type::king && get_Player_To_Move() == white)
+        {
+            // std::cout << "WSHHH" << '\n';
+
+            // std::cout << p->get_x() << '\n';
+            // std::cout << p->get_y() << '\n';
+
+            white_king->setX(destX);
+            white_king->setY(destY);
+
+            // std::cout << white_king->get_x() << '\n';
+            // std::cout << white_king->get_y() << '\n';
+
+            // print_chess_board();
+        }
     }
 }
 
@@ -505,6 +538,7 @@ bool board::check_pawn_king_knight(int current_pos_x, int current_pos_y)
 
             if (!check_pawn(chessBoard_[current_pos_x - 1][current_pos_y + 1]))
             {
+
                 return false;
             }
         }
@@ -512,6 +546,7 @@ bool board::check_pawn_king_knight(int current_pos_x, int current_pos_y)
         {
             if (!check_pawn(chessBoard_[current_pos_x - 1][current_pos_y - 1]))
             {
+
                 return false;
             }
         }
@@ -522,6 +557,8 @@ bool board::check_pawn_king_knight(int current_pos_x, int current_pos_y)
         {
             if (!check_pawn(chessBoard_[current_pos_x + 1][current_pos_y + 1]))
             {
+                // std::cout << "43" << '\n';
+
                 return false;
             }
         }
@@ -529,6 +566,8 @@ bool board::check_pawn_king_knight(int current_pos_x, int current_pos_y)
         {
             if (!check_pawn(chessBoard_[current_pos_x + 1][current_pos_y - 1]))
             {
+                // std::cout << "44" << '\n';
+
                 return false;
             }
         }
@@ -539,6 +578,7 @@ bool board::check_pawn_king_knight(int current_pos_x, int current_pos_y)
 
         if (!check_king(chessBoard_[current_pos_x - 1][current_pos_y]))
         {
+
             return false;
         }
     }
@@ -547,6 +587,7 @@ bool board::check_pawn_king_knight(int current_pos_x, int current_pos_y)
 
         if (!check_king(chessBoard_[current_pos_x - 1][current_pos_y - 1]))
         {
+
             return false;
         }
     }
@@ -555,6 +596,7 @@ bool board::check_pawn_king_knight(int current_pos_x, int current_pos_y)
 
         if (!check_king(chessBoard_[current_pos_x][current_pos_y - 1]))
         {
+
             return false;
         }
     }
@@ -563,6 +605,7 @@ bool board::check_pawn_king_knight(int current_pos_x, int current_pos_y)
 
         if (!check_king(chessBoard_[current_pos_x + 1][current_pos_y - 1]))
         {
+
             return false;
         }
     }
@@ -571,6 +614,7 @@ bool board::check_pawn_king_knight(int current_pos_x, int current_pos_y)
 
         if (!check_king(chessBoard_[current_pos_x + 1][current_pos_y]))
         {
+
             return false;
         }
     }
@@ -579,6 +623,7 @@ bool board::check_pawn_king_knight(int current_pos_x, int current_pos_y)
 
         if (!check_king(chessBoard_[current_pos_x + 1][current_pos_y + 1]))
         {
+
             return false;
         }
     }
@@ -587,6 +632,7 @@ bool board::check_pawn_king_knight(int current_pos_x, int current_pos_y)
 
         if (!check_king(chessBoard_[current_pos_x][current_pos_y + 1]))
         {
+
             return false;
         }
     }
@@ -595,6 +641,7 @@ bool board::check_pawn_king_knight(int current_pos_x, int current_pos_y)
 
         if (!check_king(chessBoard_[current_pos_x - 1][current_pos_y + 1]))
         {
+
             return false;
         }
     }
@@ -604,6 +651,7 @@ bool board::check_pawn_king_knight(int current_pos_x, int current_pos_y)
     {
         if (!check_knight(chessBoard_[current_pos_x - 2][current_pos_y + 1]))
         {
+
             return false;
         }
     }
@@ -612,6 +660,7 @@ bool board::check_pawn_king_knight(int current_pos_x, int current_pos_y)
     {
         if (!check_knight(chessBoard_[current_pos_x - 2][current_pos_y - 1]))
         {
+
             return false;
         }
     }
@@ -620,6 +669,7 @@ bool board::check_pawn_king_knight(int current_pos_x, int current_pos_y)
     {
         if (!check_knight(chessBoard_[current_pos_x + 2][current_pos_y + 1]))
         {
+
             return false;
         }
     }
@@ -628,6 +678,7 @@ bool board::check_pawn_king_knight(int current_pos_x, int current_pos_y)
     {
         if (!check_knight(chessBoard_[current_pos_x + 2][current_pos_y - 1]))
         {
+
             return false;
         }
     }
@@ -636,6 +687,7 @@ bool board::check_pawn_king_knight(int current_pos_x, int current_pos_y)
     {
         if (!check_knight(chessBoard_[current_pos_x - 1][current_pos_y + 2]))
         {
+
             return false;
         }
     }
@@ -644,6 +696,7 @@ bool board::check_pawn_king_knight(int current_pos_x, int current_pos_y)
     {
         if (!check_knight(chessBoard_[current_pos_x + 1][current_pos_y + 2]))
         {
+
             return false;
         }
     }
@@ -651,6 +704,7 @@ bool board::check_pawn_king_knight(int current_pos_x, int current_pos_y)
     {
         if (!check_knight(chessBoard_[current_pos_x - 1][current_pos_y - 2]))
         {
+
             return false;
         }
     }
@@ -659,6 +713,7 @@ bool board::check_pawn_king_knight(int current_pos_x, int current_pos_y)
     {
         if (!check_knight(chessBoard_[current_pos_x + 1][current_pos_y - 2]))
         {
+
             return false;
         }
     }
@@ -673,13 +728,21 @@ bool board::check_check(int sim_x = -1, int sim_y = -1)
     int current_pos_y;
     if (player_to_move_ == white)
     {
+        // std::cout << "WHITE" << '\n';
+
         current_pos_x = white_king->get_x();
         current_pos_y = white_king->get_y();
+        // std::cout << current_pos_x << '\n';
+        // std::cout << current_pos_y << '\n';
     }
     else
     {
+        // std::cout << "BLACK" << '\n';
+
         current_pos_x = black_king->get_x();
         current_pos_y = black_king->get_y();
+        // std::cout << current_pos_x << '\n';
+        // std::cout << current_pos_y << '\n';
     }
     if (sim_x != -1 && sim_y != -1)
     {
@@ -688,8 +751,12 @@ bool board::check_check(int sim_x = -1, int sim_y = -1)
     }
     if (!check_pawn_king_knight(current_pos_x, current_pos_y))
     {
+        // std::cout << "ohleeeee" << '\n';
+
         return false;
     }
+    // print_chess_board();
+
     int checking;
     // CHECK DIAG
     while (check_border(current_pos_x + i, current_pos_y + i))
@@ -701,6 +768,7 @@ bool board::check_check(int sim_x = -1, int sim_y = -1)
             break;
         i++;
     }
+    // std::cout << "ohleeeee2" << '\n';
 
     i = 1;
     while (check_border(current_pos_x - i, current_pos_y - i))
@@ -712,6 +780,7 @@ bool board::check_check(int sim_x = -1, int sim_y = -1)
             break;
         i++;
     }
+    // std::cout << "ohleeeee3" << '\n';
 
     i = 1;
     while (check_border(current_pos_x - i, current_pos_y + i))
@@ -727,13 +796,19 @@ bool board::check_check(int sim_x = -1, int sim_y = -1)
     i = 1;
     while (check_border(current_pos_x + i, current_pos_y - i))
     {
+
         checking = check_piece_diag(chessBoard_[current_pos_x + i][current_pos_y - i]);
         if (checking == 0)
+        {
+            // std::cout << "ohleeeee4" << '\n';
+
             return false;
+        }
         if (checking == 2)
             break;
         i++;
     }
+    // std::cout << "ohleeeee5" << '\n';
 
     // CHECK LINE
     i = 1;
@@ -746,6 +821,7 @@ bool board::check_check(int sim_x = -1, int sim_y = -1)
             break;
         i++;
     }
+    // std::cout << "ohleeeee6" << '\n';
 
     i = 1;
     while (check_border(current_pos_x - i, current_pos_y))
@@ -757,6 +833,7 @@ bool board::check_check(int sim_x = -1, int sim_y = -1)
             break;
         i++;
     }
+    // std::cout << "ohleeeee7" << '\n';
 
     i = 1;
     while (check_border(current_pos_x, current_pos_y + i))
@@ -768,6 +845,7 @@ bool board::check_check(int sim_x = -1, int sim_y = -1)
             break;
         i++;
     }
+    // std::cout << "ohleeeee8" << '\n';
 
     i = 1;
     while (check_border(current_pos_x, current_pos_y - i))
@@ -834,7 +912,7 @@ void board::check_legal_moves(std::vector<Move> &moves)
     {
         auto move = moves[i];
         auto p = chessBoard_[move.getCurrX()][move.getCurrY()];
-        std::cout << *p << '\n';
+        // std::cout << *p << '\n';
         std::shared_ptr<Piece> saveEnPassant = nullptr;
         if (move.isEnPassant1())
         {
@@ -851,23 +929,23 @@ void board::check_legal_moves(std::vector<Move> &moves)
         }
 
         // std::cout << "hello" << '\n';
-        std::cout << move.getDestX() << '\n';
-        std::cout << move.getDestY() << '\n';
-        // bool islegal = true;
-        // if (move.getDestX() < 0 || move.getDestY() < 0 || move.getCurrX() > 7 || move.getCurrY() > 7 || move.getDestY() > 7 || move.getDestX() > 7 || move.getCurrX() < 0 || move.getCurrY() < 0)
-        // {
+        // std::cout << move.getDestX() << '\n';
+        // std::cout << move.getDestY() << '\n';
+        bool islegal = true;
+        if (move.getDestX() < 0 || move.getDestY() < 0 || move.getCurrX() > 7 || move.getCurrY() > 7 || move.getDestY() > 7 || move.getDestX() > 7 || move.getCurrX() < 0 || move.getCurrY() < 0 || p == nullptr)
+        {
 
-        //     moves.erase(moves.begin() + i);
-        //     i--;
-        // }
-        // else
-        // {
+            moves.erase(moves.begin() + i);
+            i--;
+        }
+        else
+        {
 
-        auto undo = chessBoard_[move.getDestX()][move.getDestY()];
-        move_piece(p, move);
-        bool islegal = check_check();
-        undo_move(p, move, undo);
-        // }
+            auto undo = chessBoard_[move.getDestX()][move.getDestY()];
+            move_piece(p, move);
+            islegal = check_check();
+            undo_move(p, move, undo);
+        }
         if (move.isEnPassant1())
         {
             if (move.getColor() == Color::white)
@@ -878,6 +956,7 @@ void board::check_legal_moves(std::vector<Move> &moves)
 
         if (!islegal)
         {
+            // std::cout << "" << '\n';
             moves.erase(moves.begin() + i);
             i--;
         }
@@ -892,11 +971,96 @@ std::vector<Move> board::clean_moves()
             if (chessBoard_[row][col] != nullptr && chessBoard_[row][col]->get_color() == player_to_move_)
             {
                 auto moves_piece = chessBoard_[row][col]->move(*this);
-                res.insert(res.end(), moves_piece.begin(), moves_piece.end());
+                // res.insert(res.end(), moves_piece.begin(), moves_piece.end());
+                // 1. Check if moves_piece is not empty before inserting
+                std::cout << "move size:" << moves_piece.size() << '\n';
+                std::cout << "res size:" << res.size() << '\n';
+                std::cout << "res capacity:" << res.capacity() << '\n';
+                if (moves_piece.size() == 0)
+                {
+                    continue;
+                }
+                else
+                {
+                    res.insert(res.end(), moves_piece.begin(), moves_piece.end());
+                }
+                
+
+
             }
 
+    // std::cout << "size on function: " << res.size() << '\n';
     check_legal_moves(res);
+    // std::cout << "size on function: " << res.size() << '\n';
+
     return res;
+}
+bool isDraw(board &Chessboard)
+{
+    // Check for insufficient material
+    bool insufficient_material = true;
+    int knightCount = 0, bishopCount = 0, darkBishop = 0, lightBishop = 0;
+    for (int i = 0; i < BOARD_SIZE; ++i)
+    {
+        for (int j = 0; j < BOARD_SIZE; ++j)
+        {
+            auto piece = Chessboard.get_Board()[i][j];
+            if (piece != nullptr && piece->get_type() != Type::king)
+            {
+                if (piece->get_type() == Type::pawn || piece->get_type() == Type::queen || piece->get_type() == Type::rook)
+                {
+                    insufficient_material = false;
+                    break;
+                }
+                if (piece->get_type() == Type::bishop)
+                {
+                    bishopCount++;
+                    if ((i + j) % 2 == 0)
+                    {
+                        lightBishop++;
+                    }
+                    else
+                    {
+                        darkBishop++;
+                    }
+                }
+                if (piece->get_type() == Type::knight)
+                {
+                    knightCount++;
+                }
+            }
+        }
+        if (!insufficient_material)
+            break;
+    }
+    if (insufficient_material)
+    {
+        if (knightCount > 1 || bishopCount > 1)
+        {
+            insufficient_material = false;
+        }
+        if (knightCount == 1 && bishopCount == 1)
+        {
+            insufficient_material = false;
+        }
+        if (bishopCount == 2 && lightBishop == 1 && darkBishop == 1)
+        {
+            insufficient_material = false;
+        }
+    }
+    if (insufficient_material)
+        return true;
+
+    // Check for stalemate
+    // auto moves = Chessboard.clean_moves();
+    // if (moves.empty() && !Chessboard.check_check())
+    // {
+    //     return true; // Stalemate
+    // }
+
+    // Add more conditions as needed
+
+    return false; // Not a draw
 }
 
 int board::count_move()
